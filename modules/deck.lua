@@ -4,7 +4,7 @@ SMODS.Back{
     key = "misprinted",
     atlas = "deckBacks",
     pos = { x = 0, y = 0 },
-    config = {},
+    config = { },
     set_badges = function (self, card, badges)
     end,
     loc_vars = function (self, info_queue, card)
