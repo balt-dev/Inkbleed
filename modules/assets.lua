@@ -5,3 +5,11 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
+
+
+SMODS.Atlas {
+    key = "sleeveBack",
+    path = "sleeveBack.png",
+    px = 71,
+    py = 96
+}

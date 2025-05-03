@@ -1,56 +1,4 @@
 
-local key_callbacks = {}
-
-local function blacklist_one(new, old)
-    if old == 1 then return old else return new end
-end
-
-key_callbacks.x_chips = blacklist_one
-key_callbacks.h_x_chips = blacklist_one
-key_callbacks.x_mult = blacklist_one
-key_callbacks.h_x_mult = blacklist_one
-
-local function deep_copy_and_randomize(value, seed)
-    local ty = type(value)
-    if ty == "table" then
-        local t = {}
-        local key, val = next(value, nil)
-        while key ~= nil do
-            local v = deep_copy_and_randomize(val, seed .. "." .. key)
-            if key_callbacks[key] then
-                v = key_callbacks[key](v, val)
-            end
-            t[key] = v
-            key, val = next(value, key)
-        end
-        setmetatable(t, getmetatable(value))
-        return t
-    end
-    -- Considering we don't have the debug library, this is all we can really do on the copying
-    if ty == "number" then
-        local a = pseudorandom(pseudoseed(seed..".a"))
-        local b = pseudorandom(pseudoseed(seed..".b"))
-        -- Exp-normal distributed random numbers
-        local factor = math.pow(
-            MISPRINTMOD.config.Base,
-            math.sqrt(-2 * math.log(a)) * math.cos(2 * math.pi * b)
-        )
-        return value * factor
-    end
-    return value
-end
-
-function Card:misprinted_deck_initialize()
-    if G.GAME.modifiers.misprint_misprinted_deck then
-        if Card:misprint_blacklisted() then return end
-
-        local random_seed = self.randomseed or "misprint_random_seed"
-        random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
-
-        self.ability = deep_copy_and_randomize(self.ability, random_seed)
-    end
-end
-
 local name_blacklist = {
     ["Fortune Teller"] = true,
     ["Shoot the Moon"] = true,
@@ -87,11 +35,108 @@ local name_blacklist = {
     ["Astronomer"] = true,
     ["Burnt Joker"] = true,
     ["Chicot"] = true,
-    ["Perkeo"] = true
+    ["Perkeo"] = true,
+    ["Director's Cut"] = true,
+    ["Retcon"] = true,
+
+    -- Keys
+
+    order = true,
+    level = true,
+    played = true,
+    played_this_round = true,
+    ante_scaling = true,
+    ante = true,
+    blind_ante = true
 }
+
+local key_callbacks = {}
+
+local function blacklist_one(new, old)
+    if old == 1 then return old else return new end
+end
+
+key_callbacks.x_chips = blacklist_one
+key_callbacks.h_x_chips = blacklist_one
+key_callbacks.x_mult = blacklist_one
+key_callbacks.h_x_mult = blacklist_one
+
+
+function deep_copy(value)
+    local ty = type(value)
+    if ty == "table" then
+        local t = {}
+        local key, val = next(value, nil)
+        while key ~= nil do
+            t[key] = deep_copy(val)
+            key, val = next(value, key)
+        end
+        setmetatable(t, debug.getmetatable(value))
+        return t
+    end
+    return value
+end
+
+function deep_copy_and_randomize(value, seed)
+    local t = deep_copy(value)
+    return randomize(t, seed)
+end
+
+function sanitize_float(f)
+    if type(f) ~= "number" then return f end
+    return math.floor(f * 1000) / 1000
+end
+
+function randomize(value, seed, amount)
+    amount = amount or 1
+    local ty = type(value)
+    if ty == "number" or (
+        -- Talisman
+        ty == "table" and (
+            (BigMeta and getmetatable(value) == BigMeta) or
+            (OmegaMeta and getmetatable(value) == OmegaMeta)
+        )
+    ) then
+        local a = pseudorandom(pseudoseed(seed..".a"))
+        local b = pseudorandom(pseudoseed(seed..".b"))
+        a = math.min(math.max(a, 0.000001), 0.9999999)
+        b = math.min(math.max(b, 0.000001), 0.9999999)
+        -- Exp-normal distributed random numbers
+        local power = math.sqrt(-2 * math.log(a)) * math.cos(2 * math.pi * b)
+        local factor = math.pow(MISPRINTMOD.config.Base, power)
+        return sanitize_float((value * (1 - amount)) + (value * factor) * amount)
+    end
+    if ty == "table" then
+        local key, val = next(value, nil)
+        while key ~= nil do
+            local v = val
+            if not name_blacklist[key] then
+                v = randomize(val, seed .. "." .. key, amount)
+                if key_callbacks[key] then
+                    v = key_callbacks[key](v, val)
+                end
+            end
+            value[key] = v
+            key, val = next(value, key)
+        end
+    end
+    return value
+end
+
+function Card:misprinted_deck_initialize()
+    if G.GAME.modifiers.misprint_misprinted_deck then
+        if self:misprint_blacklisted() then return end
+
+        local random_seed = self.randomseed or "misprint_random.card"
+        random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
+
+        self.ability = deep_copy_and_randomize(self.ability, random_seed)
+    end
+end
 
 function Card:misprint_blacklisted()
     if self.area and self.area.config.collection then return true end
-    if name_blacklist[self.ability.name] then return true end
+    if self.ability and name_blacklist[self.ability.name] then return true end
+    if self.name and name_blacklist[self.name] then return true end
     return false
 end

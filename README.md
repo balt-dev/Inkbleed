@@ -23,5 +23,5 @@ You can download a .zip of the mod using the "Download ZIP" button under the "Co
 
 This mod is under the GPL license, which is available in the `LICENSE` file in the root of this repository.
 
-Takes code from [Cryptid](https://github.com/SpectralPack/Cryptid) and [AikoyoriShenanigans](https://github.com/Aikoyori/Balatro-Aikoyoris-Shenanigans).
-Their licenses can be found in `LICENSE-CRYPTID` and `LICENSE-AIKOYORI` respectively.
+Referenced off of and takes a few assets and code from [Cryptid](https://github.com/SpectralPack/Cryptid), [CardSleeves](https://github.com/larswijn/CardSleeves) and [AikoyoriShenanigans](https://github.com/Aikoyori/Balatro-Aikoyoris-Shenanigans).
+Their licenses can be found in `LICENSE-CRYPTID`, `LICENSE-CARDSLEEVES`, and `LICENSE-AIKOYORI` respectively.

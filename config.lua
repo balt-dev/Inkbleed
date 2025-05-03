@@ -1,1 +1,1 @@
-return { Base = 5 }
+return { Base = 2.5 }

@@ -17,3 +17,7 @@ assert(SMODS.load_file("./modules/config.lua"))()
 assert(SMODS.load_file("./modules/deck.lua"))()
 assert(SMODS.load_file("./modules/hooks.lua"))()
 assert(SMODS.load_file("./modules/misprintize.lua"))()
+
+if CardSleeves then
+    assert(SMODS.load_file("./modules/sleeve.lua"))()
+end

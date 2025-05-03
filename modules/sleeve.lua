@@ -1,13 +1,9 @@
--- TODO: Add a cardsleeve
-
-SMODS.Back{
+CardSleeves.Sleeve{
     key = "misprinted",
-    atlas = "deckBacks",
+    atlas = "sleeveBack",
     pos = { x = 0, y = 0 },
     config = {},
-    set_badges = function (self, card, badges)
-    end,
-    loc_vars = function (self, info_queue, card)
+    loc_vars = function (self)
         return {
             vars = {
                 1 / MISPRINTMOD.config.Base,

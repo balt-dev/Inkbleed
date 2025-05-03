@@ -1,0 +1,43 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 20000
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "G:save_settings()"
+position = "before"
+payload = '''
+if not saveTable then
+randomize_game_stuff(gameSeed)
+end
+'''
+match_indent = true
+times = 1
+
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''args.seed or (not (G.SETTINGS.tutorial_complete or G.SETTINGS.tutorial_progress.completed_parts['big_blind']) and "TUTORIAL") or generate_starting_seed()'''
+position = "at"
+payload = '''gameSeed'''
+overwrite = true
+match_indent = false
+times = 1
+
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME = saveTable and saveTable.GAME or self:init_game_object()"
+position = "before"
+payload = '''
+local gameSeed
+if not saveTable then
+    gameSeed = args.seed or (not (G.SETTINGS.tutorial_complete or G.SETTINGS.tutorial_progress.completed_parts['big_blind']) and "TUTORIAL") or generate_starting_seed()
+end
+'''
+match_indent = true
+times = 1
