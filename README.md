@@ -7,7 +7,7 @@ which means that multipliers can be theoretically infinite, but get rarer as the
 
 Note that some cards may be a little broken, YMMV.
 
-Supports CardSleeves!
+Supports CardSleeves and Talisman! Doesn't break Cryptid. For other mods, YMMV.
 
 ## Usage
 
