@@ -1,5 +1,5 @@
 --- STEAMODDED HEADER
---- MOD_NAME: MoreBalancedMisprint
+--- MOD_NAME: Inkbleed
 --- MOD_ID: misprint
 --- PREFIX: misprint
 --- MOD_AUTHOR: [baltdev]
