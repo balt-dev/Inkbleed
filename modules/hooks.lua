@@ -44,7 +44,7 @@ end
 local eventManagerHook = EventManager.update
 function EventManager:update(dt, forced)
     local ret = eventManagerHook(self, dt, forced)
-    if G.hand and G.hand.config.card_limit then
+    if G.GAME.modifiers.misprint_misprinted_deck and G.hand and G.hand.config.card_limit then
         G.hand.config.card_limit = math.min(G.hand.config.card_limit, G.deck.config.card_limit)
     end
     return ret
