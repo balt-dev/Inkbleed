@@ -41,16 +41,6 @@ function Card:set_cost()
     return ret
 end
 
-local eventManagerHook = EventManager.update
-function EventManager:update(dt, forced)
-    local ret = eventManagerHook(self, dt, forced)
-    if G.GAME.pack_size and G.GAME.pack_choices then
-        G.GAME.pack_size = math.floor(G.GAME.pack_size)
-        G.GAME.pack_choices = math.min(G.GAME.pack_size, G.GAME.pack_choices)
-    end
-    return ret
-end
-
 -- Patch to fix decimal blinds
 
 local getBlindAmount = get_blind_amount
