@@ -201,6 +201,9 @@ function randomize(value, seed, amount)
         return sanitize_float((value * (1 - amount)) + (value * factor) * amount)
     end
     if ty == "table" then
+        if value.immutable and value.immutable == true then
+            return value
+        end
         local key, val = next(value, nil)
         while key ~= nil do
             local v = val
