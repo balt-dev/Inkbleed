@@ -246,36 +246,34 @@ MISPRINTMOD.config_tab = function()
 							create_toggle { col = true, label = localize('misprint_base_reroll_cost'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'base_reroll_cost' },
 							create_toggle { col = true, label = localize('misprint_joker_slots'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'joker_slots' },
 							create_toggle { col = true, label = localize('misprint_consumable_slots'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'consumable_slots' },
-							create_toggle { col = true, label = localize('misprint_hand_base_values'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'hand_base_values' },
+							create_toggle { col = true, label = localize('misprint_hand_values'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'hand_values' },
 						},
 					},
 					{
 						n=G.UIT.R,
 						config = {align = "cm", colour = G.C.TRANSPARENT},
 						nodes = {
-							create_toggle { col = true, label = localize('misprint_hand_level_values'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'hand_level_values' },
 							create_toggle { col = true, label = localize('misprint_jokers_and_consumables'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'jokers_and_consumables' },
 							create_toggle { col = true, label = localize('misprint_win_ante'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'win_ante' },
 							create_toggle { col = true, label = localize('misprint_editions'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'editions' },
+							create_toggle { col = true, label = localize('misprint_enhancements'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'enhancements' },
 						},
 					},
 					{
 						n=G.UIT.R,
 						config = {align = "cm", colour = G.C.TRANSPARENT},
 						nodes = {
-							create_toggle { col = true, label = localize('misprint_enhancements'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'enhancements' },
 							create_toggle { col = true, label = localize('misprint_cost'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'cost' },
 							create_toggle { col = true, label = localize('misprint_rental_rate'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'rental_rate' },
 							create_toggle { col = true, label = localize('misprint_perishable_rounds'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'perishable_rounds' },
+							create_toggle { col = true, label = localize('misprint_play_limit'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'play_limit' },
 						}
 					},
 					{
 						n=G.UIT.R,
 						config = {align = "cm", colour = G.C.TRANSPARENT},
 						nodes = {
-							create_toggle { col = true, label = localize('misprint_play_limit'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'play_limit' },
 							create_toggle { col = true, label = localize('misprint_discard_limit'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'discard_limit' },
-							create_toggle { col = true, label = localize('misprint_highlight_limit'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'highlight_limit' },
 						}
 					}
 				}
