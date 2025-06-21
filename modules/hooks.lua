@@ -2,16 +2,20 @@
 local cardInitHook = Card.init
 function Card:init(X, Y, W, H, card, center, params)
     local ret = cardInitHook(self, X, Y, W, H, card, center, params)
-    self:misprinted_deck_initialize()
+    if MISPRINTMOD.config.jokers_and_consumables then self:misprinted_deck_initialize() end
     return ret
 end
 
 local cardSetBaseHook = Card.set_base
 function Card:set_base(card, initial)
     local ret = cardSetBaseHook(self, card, initial)
-    if G.GAME.modifiers.misprint_misprinted_deck and self.base then
+    if
+        G.GAME.modifiers.misprint_misprinted_deck and self.base
+        and MISPRINTMOD.config.base_chips
+    then
         local random_seed = self.randomseed or "misprint_random.base"
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
+        self.base.nominal = randomize(self.base.nominal, random_seed)
     end
     return ret
 end
@@ -19,7 +23,10 @@ end
 local cardSetEditionHook = Card.set_edition
 function Card:set_edition(card, initial)
     local ret = cardSetEditionHook(self, card, initial)
-    if G.GAME.modifiers.misprint_misprinted_deck and self.edition then
+    if
+        G.GAME.modifiers.misprint_misprinted_deck and self.edition
+        and MISPRINTMOD.config.editions
+    then
         local random_seed = self.randomseed or "misprint_random.edition"
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
         randomize(self.edition, random_seed)
@@ -30,22 +37,16 @@ end
 local cardSetCostHook = Card.set_cost
 function Card:set_cost()
     local ret = cardSetCostHook(self)
-    if G.GAME.modifiers.misprint_misprinted_deck and self.cost then
+    if
+        G.GAME.modifiers.misprint_misprinted_deck and self.cost
+        and MISPRINTMOD.config.cost
+    then
         local random_seed = self.randomseed or "misprint_random.cost"
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
         local factor = randomize(1, random_seed)
         self.cost = self.cost * factor
         self.sell_cost = self.sell_cost * factor
         self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
-    end
-    return ret
-end
-
-local eventManagerHook = EventManager.update
-function EventManager:update(dt, forced)
-    local ret = eventManagerHook(self, dt, forced)
-    if G.GAME.modifiers.misprint_misprinted_deck and G.hand and G.hand.config.card_limit then
-        G.hand.config.card_limit = math.min(G.hand.config.card_limit, G.deck.config.card_limit)
     end
     return ret
 end
@@ -81,20 +82,43 @@ function randomize_game_stuff(gameSeed)
         print("randomizing game stuff")
         local seed = gameSeed .. "misprint_random"
 
-        G.GAME.base_reroll_cost = randomize(G.GAME.base_reroll_cost, seed .. ".base_reroll_cost")
-        G.GAME.win_ante = math.ceil(randomize(G.GAME.win_ante, seed .. ".win_ante", 0.3) - 0.5)
-        G.GAME.perishable_rounds = randomize(G.GAME.perishable_rounds, seed .. ".perishable_rounds")
-        G.GAME.rental_rate = randomize(G.GAME.rental_rate, seed .. ".rental_rate")
+        if MISPRINTMOD.config.base_reroll_cost then
+            G.GAME.base_reroll_cost = randomize(G.GAME.base_reroll_cost, seed .. ".base_reroll_cost")
+        end
+        if MISPRINTMOD.config.win_ante then
+            G.GAME.win_ante = math.ceil(randomize(G.GAME.win_ante, seed .. ".win_ante", 0.3) - 0.5)
+        end
+        if MISPRINTMOD.config.perishable_rounds then
+            G.GAME.perishable_rounds = randomize(G.GAME.perishable_rounds, seed .. ".perishable_rounds")
+        end
+        if MISPRINTMOD.config.rental_rate then
+            G.GAME.rental_rate = randomize(G.GAME.rental_rate, seed .. ".rental_rate")
+        end
 
         randomize(G.GAME.starting_params, seed .. ".starting_params", 0.3)
         randomize(G.GAME.round_resets, seed .. ".round_resets", 0.1)
 
-        G.GAME.hands = deep_copy_and_randomize(G.GAME.hands, seed .. ".hands")
-        for _, tab in pairs(G.GAME.hands) do
-            tab.s_mult = tab.mult
-            tab.s_chips = tab.chips
+        if MISPRINTMOD.config.hand_values then
+            G.GAME.hands = deep_copy_and_randomize(G.GAME.hands, seed .. ".hands")
+            for _, tab in pairs(G.GAME.hands) do
+                tab.s_mult = tab.mult
+                tab.s_chips = tab.chips
+            end
         end
-        G.GAME.dollars = randomize(G.GAME.dollars, seed .. ".dollars", 0.2)
+        if MISPRINTMOD.config.dollars then
+            G.GAME.dollars = randomize(G.GAME.dollars, seed .. ".dollars", 0.2)
+        end
+
         print("game stuff randomized")
+
+        G.E_MANAGER:add_event(Event({
+            trigger = "after",
+            delay = 0.7,
+            func = function()
+                SMODS.change_play_limit(0)
+                SMODS.change_discard_limit(0)
+                return true
+            end,
+        }))
     end
 end

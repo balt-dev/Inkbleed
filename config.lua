@@ -1,1 +1,22 @@
-return { Base = 2.5 }
+return {
+	Base = 2.5,
+	dollars = true,
+	hand_size = false,
+	discards = false,
+	hands = false,
+	base_reroll_cost = false,
+	joker_slots = false,
+	consumable_slots = false,
+	hand_values = true,
+	jokers_and_consumables = true,
+	win_ante = false,
+	editions = true,
+	enhancements = true,
+	base_chips = true,
+	cost = true,
+	rental_rate = true,
+	perishable_rounds = true,
+	play_limit = true,
+	discard_limit = true,
+	highlight_limit = true
+}

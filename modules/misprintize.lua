@@ -49,7 +49,10 @@ local name_blacklist = {
     ante_scaling = true,
     ante = true,
     blind_ante = true,
-    min_highlighted = true
+    min_highlighted = true,
+    nodes = true,
+    mod_num = true,
+    consumeable = true
 }
 
 local key_callbacks = {}
@@ -64,10 +67,92 @@ key_callbacks.x_mult = blacklist_one
 key_callbacks.h_x_mult = blacklist_one
 
 function key_callbacks.max_highlighted(new, old, value)
+    if value.consumeable then
+        value.consumeable.max_highlighted = math.floor(new)
+    end
     if value.min_highlighted then
-        value.min_highlighted = new
+        value.min_highlighted = math.floor(new)
+        if value.consumeable then
+            value.consumeable.min_highlighted = math.floor(new)
+        end
+    end
+    if value.mod_num then
+        value.mod_num = math.floor(new)
+        if value.consumeable then
+            value.consumeable.mod_num = math.floor(new)
+        end
     end
     return new
+end
+
+function key_callbacks.dollars (new, old)
+    if MISPRINTMOD.config.dollars then
+       return new
+   end
+   return old
+end
+
+function key_callbacks.play_limit (new, old)
+    if MISPRINTMOD.config.play_limit then
+       return math.floor(new + 0.5)
+   end
+   return old
+end
+
+function key_callbacks.discard_limit (new, old)
+    if MISPRINTMOD.config.discard_limit then
+       return math.floor(new + 0.5)
+   end
+   return old
+end
+
+function key_callbacks.highlight_limit (new, old)
+    if MISPRINTMOD.config.highlight_limit then
+       return math.ceil(new)
+   end
+   return old
+end
+
+function key_callbacks.hand_size (new, old)
+    if MISPRINTMOD.config.hand_size then
+       return math.ceil(new)
+   end
+   return old
+end
+
+function key_callbacks.discards (new, old)
+    if MISPRINTMOD.config.discards then
+       return math.floor(new + 0.5)
+   end
+   return old
+end
+
+function key_callbacks.hands (new, old)
+    if MISPRINTMOD.config.hands then
+       return math.ceil(new)
+   end
+   return old
+end
+
+function key_callbacks.reroll_cost (new, old)
+    if MISPRINTMOD.config.reroll_cost then
+       return new
+   end
+   return old
+end
+
+function key_callbacks.joker_slots (new, old)
+    if MISPRINTMOD.config.joker_slots then
+       return math.floor(new + 0.5)
+   end
+   return old
+end
+
+function key_callbacks.consumable_slots (new, old)
+    if MISPRINTMOD.config.consumable_slots then
+       return math.floor(new + 0.5)
+   end
+   return old
 end
 
 
