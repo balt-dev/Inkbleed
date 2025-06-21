@@ -41,13 +41,15 @@ local name_blacklist = {
 
     -- Keys
 
+    immutable = true,
     order = true,
     level = true,
     played = true,
     played_this_round = true,
     ante_scaling = true,
     ante = true,
-    blind_ante = true
+    blind_ante = true,
+    min_highlighted = true
 }
 
 local key_callbacks = {}
@@ -60,6 +62,13 @@ key_callbacks.x_chips = blacklist_one
 key_callbacks.h_x_chips = blacklist_one
 key_callbacks.x_mult = blacklist_one
 key_callbacks.h_x_mult = blacklist_one
+
+function key_callbacks.max_highlighted(new, old, value)
+    if value.min_highlighted then
+        value.min_highlighted = new
+    end
+    return new
+end
 
 
 function deep_copy(value)
@@ -113,7 +122,7 @@ function randomize(value, seed, amount)
             if not name_blacklist[key] then
                 v = randomize(val, seed .. "." .. key, amount)
                 if key_callbacks[key] then
-                    v = key_callbacks[key](v, val)
+                    v = key_callbacks[key](v, val, value)
                 end
             end
             value[key] = v
