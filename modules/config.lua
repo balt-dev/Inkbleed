@@ -275,6 +275,7 @@ MISPRINTMOD.config_tab = function()
 						nodes = {
 							create_toggle { col = true, label = localize('misprint_discard_limit'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'discard_limit' },
 							create_toggle { col = true, label = localize('misprint_voucher_slots'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'voucher_slots' },
+							create_toggle { col = true, label = localize('misprint_base_chips'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'base_chips' },
 						}
 					}
 				}
