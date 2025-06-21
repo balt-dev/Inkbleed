@@ -233,7 +233,7 @@ MISPRINTMOD.config_tab = function()
 						n=G.UIT.R,
 						config = {align = "cm", colour = G.C.TRANSPARENT},
 						nodes = {
-							create_toggle { col = true, label = localize('misprint_money'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'money' },
+							create_toggle { col = true, label = localize('misprint_money'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'dollars' },
 							create_toggle { col = true, label = localize('misprint_hand_size'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'hand_size' },
 							create_toggle { col = true, label = localize('misprint_discards'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'discards' },
 							create_toggle { col = true, label = localize('misprint_hands'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'hands' }
