@@ -49,6 +49,7 @@ return {
             misprint_play_limit = "Play Limit",
             misprint_discard_limit = "Discard Limit",
             misprint_highlight_limit = "Highlight Limit",
+            misprint_voucher_slots = "Voucher Slots",
 		}
 	}
 }

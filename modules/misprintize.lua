@@ -92,6 +92,13 @@ function key_callbacks.dollars (new, old)
    return old
 end
 
+function key_callbacks.voucher_slots (new, old)
+    if MISPRINTMOD.config.voucher_slots then
+       return math.max(1, new)
+   end
+   return old
+end
+
 function key_callbacks.play_limit (new, old)
     if MISPRINTMOD.config.play_limit then
        return math.floor(new + 0.5)
