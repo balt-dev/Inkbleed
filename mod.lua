@@ -9,6 +9,7 @@
 
 MISPRINTMOD = SMODS.current_mod
 
+assert(SMODS.change_play_limit, "Your SMODS version is out of date. Please update SMODS to use Inkbleed.")
 
 assert(SMODS.current_mod.lovely, "Lovely patches were not loaded! Make sure your mod is in the right place.")
 
