@@ -34,22 +34,7 @@ function Card:set_edition(card, initial)
     return ret
 end
 
-local cardSetCostHook = Card.set_cost
-function Card:set_cost()
-    local ret = cardSetCostHook(self)
-    if
-        G.GAME.modifiers.misprint_misprinted_deck and self.cost
-        and MISPRINTMOD.config.cost
-    then
-        local random_seed = self.randomseed or "misprint_random.cost"
-        random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
-        local factor = randomize(1, random_seed)
-        self.cost = self.cost * factor
-        self.sell_cost = self.sell_cost * factor
-        self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
-    end
-    return ret
-end
+
 
 -- Patch to fix decimal blinds
 
