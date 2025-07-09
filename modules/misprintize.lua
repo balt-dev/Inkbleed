@@ -52,7 +52,8 @@ local name_blacklist = {
     min_highlighted = true,
     nodes = true,
     mod_num = true,
-    consumeable = true
+    consumeable = true,
+    extra_disp = true
 }
 
 local key_callbacks = {}
@@ -85,6 +86,13 @@ function key_callbacks.max_highlighted(new, old, value)
     return new
 end
 
+function key_callbacks.starting_voucher_count (new, old)
+    if MISPRINTMOD.config.voucher_slots then
+        return math.max(1, new)
+    end
+    return old
+end
+
 function key_callbacks.dollars (new, old)
     if MISPRINTMOD.config.dollars then
        return new
@@ -92,51 +100,52 @@ function key_callbacks.dollars (new, old)
    return old
 end
 
-function key_callbacks.voucher_slots (new, old)
-    if MISPRINTMOD.config.voucher_slots then
-       return math.max(1, new)
+function key_callbacks.extra (new, old, value)
+    if MISPRINTMOD.config.jokers_and_consumables and value.extra_disp then
+       local mult = new / old
+       value.extra_disp = value.extra_disp * mult
    end
-   return old
+   return new
 end
 
 function key_callbacks.play_limit (new, old)
     if MISPRINTMOD.config.play_limit then
-       return math.floor(new + 0.5)
+       return new
    end
    return old
 end
 
 function key_callbacks.discard_limit (new, old)
     if MISPRINTMOD.config.discard_limit then
-       return math.floor(new + 0.5)
+       return new
    end
    return old
 end
 
 function key_callbacks.highlight_limit (new, old)
     if MISPRINTMOD.config.highlight_limit then
-       return math.ceil(new)
+       return new
    end
    return old
 end
 
 function key_callbacks.hand_size (new, old)
     if MISPRINTMOD.config.hand_size then
-       return math.ceil(new)
+       return new
    end
    return old
 end
 
 function key_callbacks.discards (new, old)
     if MISPRINTMOD.config.discards then
-       return math.floor(new + 0.5)
+       return new
    end
    return old
 end
 
 function key_callbacks.hands (new, old)
     if MISPRINTMOD.config.hands then
-       return math.ceil(new)
+       return new
    end
    return old
 end
@@ -150,14 +159,14 @@ end
 
 function key_callbacks.joker_slots (new, old)
     if MISPRINTMOD.config.joker_slots then
-       return math.floor(new + 0.5)
+       return new
    end
    return old
 end
 
 function key_callbacks.consumable_slots (new, old)
     if MISPRINTMOD.config.consumable_slots then
-       return math.floor(new + 0.5)
+       return new
    end
    return old
 end

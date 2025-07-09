@@ -18,5 +18,6 @@ return {
 	perishable_rounds = true,
 	play_limit = true,
 	discard_limit = true,
-	highlight_limit = true,q
+	highlight_limit = true,
+	voucher_slots = true
 }

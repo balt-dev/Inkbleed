@@ -37,6 +37,7 @@ return {
             misprint_hands = "Hands",
             misprint_base_reroll_cost = "Base Reroll Cost",
             misprint_joker_slots = "Joker Slots",
+            misprint_voucher_slots = "Voucher Slots",
             misprint_consumable_slots = "Consumable Slots",
             misprint_hand_values = "Hand Values",
             misprint_jokers_and_consumables = "Jokers & Consumables",
@@ -49,7 +50,6 @@ return {
             misprint_play_limit = "Play Limit",
             misprint_discard_limit = "Discard Limit",
             misprint_highlight_limit = "Highlight Limit",
-            misprint_voucher_slots = "Voucher Slots",
 		}
 	}
 }

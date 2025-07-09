@@ -2,7 +2,13 @@
 local cardInitHook = Card.init
 function Card:init(X, Y, W, H, card, center, params)
     local ret = cardInitHook(self, X, Y, W, H, card, center, params)
-    if MISPRINTMOD.config.jokers_and_consumables then self:misprinted_deck_initialize() end
+    if MISPRINTMOD.config.jokers_and_consumables then
+        self:misprinted_deck_initialize()
+        if center and center.misprint_randomized then
+            self.ability = center.config
+        end
+        self.misprint_randomized = true
+    end
     return ret
 end
 
@@ -26,6 +32,7 @@ function Card:set_edition(card, initial)
     if
         G.GAME.modifiers.misprint_misprinted_deck and self.edition
         and MISPRINTMOD.config.editions
+        and (self.edition and not self.edition.negative)
     then
         local random_seed = self.randomseed or "misprint_random.edition"
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
@@ -106,4 +113,34 @@ function randomize_game_stuff(gameSeed)
             end,
         }))
     end
+end
+
+local card_apply = Card.apply_to_run
+
+function Card:apply_to_run(center)
+    if self then print(self.ability) end
+    return card_apply(self, center)
+end
+
+local init_loc = init_localization
+
+function init_localization()
+    local to_fix = {
+        G.localization.descriptions.Voucher.v_antimatter.text,
+        G.localization.descriptions.Voucher.v_overstock_norm.text,
+        G.localization.descriptions.Voucher.v_overstock_plus.text,
+        G.localization.descriptions.Voucher.v_crystal_ball.text,
+    }
+    for _, tbl in pairs(to_fix) do
+        print("Fixing ", tbl)
+        local counter = 0
+        for i, line in ipairs(tbl) do
+            tbl[i] = line:gsub("([%+%-])%d+", function(prefix)
+                counter = counter + 1
+                return prefix .. "#" .. counter .. "#"
+            end)
+        end
+    end
+    print("Fixed localization for Inkbleed!")
+    init_loc()
 end
