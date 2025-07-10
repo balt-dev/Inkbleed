@@ -53,7 +53,20 @@ return {
             misprint_ambient_tilt = "Ambient Card Tilt",
             misprint_scale = "Card Scale",
 
-            misprint_only_increase = "Only increase values?"
+            misprint_only_increase = "Only increase values?",
+
+            misprint_explain_hover = "How does this work? (Hover)",
+            misprint_yap = {
+                "Each value configured to be randomized is multiplied by a value determined by",
+                "the formula B^x, where B is the configured base.",
+                "x varies on a {C:attention}standard normal{} distribution, meaning, for example,",
+                "it has a good chance of being close to 0 (leading to a multiplication of around 1),",
+                "a lower chance of being close to 1 or -1 (leading to a multiplication of around B or 1/B),",
+                "an even lower chance of being close to 2 or -2 (leading to a multiplication of around B^2 or 1/B^2),",
+                "and so on and so forth.",
+                "{X:attention,C:white}TL;DR{}: Multiplier can go infinitely big or small, but bigger/smaller means more rare.",
+                "The higher you set B, the bigger/smaller it usually gets.",
+            }
 		}
 	}
 }

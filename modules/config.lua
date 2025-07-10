@@ -218,7 +218,7 @@ MISPRINTMOD.config_tab = function()
 						current = MISPRINTMOD.config.Base,
 						callback = function(val)
 							MISPRINTMOD.config.Base = val
-						end
+						end,
 					},
 					{
 						n=G.UIT.R,
@@ -296,7 +296,24 @@ MISPRINTMOD.config_tab = function()
 							create_toggle { col = true, label = localize('misprint_ambient_tilt'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'ambient_tilt' },
 							create_toggle { col = true, label = localize('misprint_scale'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'scale' },
 						}
-					}
+					},
+					{
+						n=G.UIT.R,
+						config = {align = "cm"},
+						nodes = { {
+							n = G.UIT.C,
+							config = {align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLUE, shadow = true},
+							nodes = { {
+								n = G.UIT.T,
+								config = {
+									text = localize("misprint_explain_hover"), scale = 0.5, colour = G.C.UI.TEXT_LIGHT,
+									tooltip = {
+										text = localize("misprint_yap"),
+									}
+								}
+							} }
+						} },
+					},
 				}
 			}
 		}

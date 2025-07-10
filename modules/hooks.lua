@@ -166,3 +166,4 @@ function init_localization()
     print("Fixed localization for Inkbleed!")
     init_loc()
 end
+
