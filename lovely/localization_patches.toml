@@ -227,3 +227,12 @@ pattern = '''^(.*)G\.GAME\.current_round\.hands_left\s*<\s*1(.*)$'''
 position = "at"
 payload = '''$1 G.GAME.current_round.hands_left <= 0 $2'''
 match_indent = false
+
+
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+pattern = '''function UIElement:draw_self()'''
+position = "after"
+payload = '''self.config.colour = self.config.colour or {1, 1, 1, 1}'''
+match_indent = false

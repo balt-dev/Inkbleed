@@ -51,6 +51,7 @@ return {
             misprint_highlight_limit = "Highlight Limit",
             misprint_cost = "Cost",
             misprint_tags = "Tags",
+            misprint_hand_levels = "Hand Starting Levels",
             misprint_ambient_tilt = "Ambient Card Tilt",
             misprint_scale = "Card Scale",
 

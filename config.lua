@@ -25,4 +25,5 @@ return {
 	ambient_tilt = true,
 	scale = true,
 	tags = true,
+	hand_levels = true,
 }

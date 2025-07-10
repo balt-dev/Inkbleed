@@ -130,9 +130,13 @@ function randomize_game_stuff(gameSeed)
 
         if MISPRINTMOD.config.hand_values then
             G.GAME.hands = deep_copy_and_randomize(G.GAME.hands, seed .. ".hands")
-            for _, tab in pairs(G.GAME.hands) do
+            for hand, tab in pairs(G.GAME.hands) do
                 tab.s_mult = tab.mult
                 tab.s_chips = tab.chips
+                if MISPRINTMOD.config.hand_levels then
+                    local new_level = randomize(tab.level, seed .. ".hand_levels")
+                    level_up_hand(nil, hand, true, new_level - 1)
+                end
             end
         end
         if MISPRINTMOD.config.dollars then

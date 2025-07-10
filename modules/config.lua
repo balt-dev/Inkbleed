@@ -293,6 +293,7 @@ MISPRINTMOD.config_tab = function()
 						n=G.UIT.R,
 						config = {align = "cm", colour = G.C.TRANSPARENT},
 						nodes = {
+							create_toggle { col = true, label = localize('misprint_hand_levels'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'hand_levels' },
 							create_toggle { col = true, label = localize('misprint_ambient_tilt'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'ambient_tilt' },
 							create_toggle { col = true, label = localize('misprint_scale'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'scale' },
 						}
