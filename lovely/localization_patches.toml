@@ -199,3 +199,11 @@ payload = '''
 v_planet_tycoon=    {order = 20,     discovered = false, unlocked = false, available = true,cost = 10, name = "Planet Tycoon", pos = {x=2,y=1}, set = "Voucher", config = {extra = 32/9.6, extra_disp = 4}, requires = {'v_planet_merchant'},unlock_condition = {type = 'c_planets_bought', extra = 50}},
 '''
 match_indent = true
+
+[[patches]]
+[patches.regex]
+target = "game.lua"
+pattern = '''^(.*)G\.GAME\.current_round\.hands_left\s*<\s*1(.*)$'''
+position = "at"
+payload = '''$1 G.GAME.current_round.hands_left <= 0 $2'''
+match_indent = false
