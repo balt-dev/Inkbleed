@@ -77,6 +77,16 @@ match_indent = false
 [[patches]]
 [patches.pattern]
 target = "card.lua"
+
+pattern = '''return self.base.nominal + self.ability.bonus + (self.ability.perma_bonus or 0)'''
+position = "at"
+payload = '''return (self.base.altered_nominal or self.base.nominal) + self.ability.bonus + (self.ability.perma_bonus or 0)'''
+times = 1
+match_indent = false
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
 pattern = "G.hand:change_size(1)"
 position = "at"
 payload = "G.hand:change_size(center_table.extra)"
