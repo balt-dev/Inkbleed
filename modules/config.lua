@@ -223,12 +223,21 @@ MISPRINTMOD.config_tab = function()
 					{
 						n=G.UIT.R,
 						config = {align = "cm", colour = G.C.TRANSPARENT},
-						nodes = { {
-							n = G.UIT.T,
-							config = {
-								text = localize("misprint_enabled"), scale = 0.8, colour = G.C.UI.TEXT_LIGHT
+						nodes = {
+							create_toggle { col = true, label = localize('misprint_only_increase'), label_scale = 0.35, w = 0, scale = 0.8, ref_table = MISPRINTMOD.config, ref_value = 'only_increase' },
+						},
+					},
+					{
+						n=G.UIT.R,
+						config = {align = "cm", colour = G.C.TRANSPARENT},
+						nodes = {
+							{
+								n = G.UIT.T,
+								config = {
+									text = localize("misprint_enabled"), scale = 0.8, colour = G.C.UI.TEXT_LIGHT
+								}
 							}
-						} },
+						},
 					},
 					{
 						n=G.UIT.R,
@@ -277,6 +286,15 @@ MISPRINTMOD.config_tab = function()
 							create_toggle { col = true, label = localize('misprint_discard_limit'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'discard_limit' },
 							create_toggle { col = true, label = localize('misprint_voucher_slots'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'voucher_slots' },
 							create_toggle { col = true, label = localize('misprint_base_chips'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'base_chips' },
+							create_toggle { col = true, label = localize('misprint_cost'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'cost' },
+						}
+					},
+					{
+						n=G.UIT.R,
+						config = {align = "cm", colour = G.C.TRANSPARENT},
+						nodes = {
+							create_toggle { col = true, label = localize('misprint_ambient_tilt'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'ambient_tilt' },
+							create_toggle { col = true, label = localize('misprint_scale'), label_scale = 0.25, w = 0, scale = 0.7, ref_table = MISPRINTMOD.config, ref_value = 'scale' },
 						}
 					}
 				}

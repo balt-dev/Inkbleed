@@ -21,7 +21,7 @@ function Card:set_base(card, initial)
     then
         local random_seed = self.randomseed or "misprint_random.base"
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
-        self.base.nominal = randomize(self.base.nominal, random_seed)
+        self.base.altered_nominal = randomize(self.base.nominal, random_seed)
     end
     return ret
 end
@@ -41,6 +41,32 @@ function Card:set_edition(card, initial)
     return ret
 end
 
+local cardSetAbilityHook = Card.set_ability
+function Card:set_ability(center, initial, delay_sprites)
+    local ret = cardSetAbilityHook(self, center, initial, delay_sprites)
+    if
+        G.GAME.modifiers.misprint_misprinted_deck
+        and MISPRINTMOD.config.scale
+    then
+        local random_seed = self.randomseed or "misprint_random.scale"
+        random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
+
+        local mul = randomize(1, random_seed, 0.025, 3)
+        mul = math.max(math.min(mul, 1.7), 0.3)
+        self.T.w = self.T.w * mul
+        self.T.h = self.T.h * mul
+    end
+    if
+        G.GAME.modifiers.misprint_misprinted_deck
+        and MISPRINTMOD.config.cost
+    then
+        local random_seed = self.randomseed or "misprint_random.cost"
+        random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
+
+        self.base_cost = randomize(self.base_cost, random_seed)
+    end
+
+end
 
 
 -- Patch to fix decimal blinds
@@ -71,11 +97,10 @@ end
 
 function randomize_game_stuff(gameSeed)
     if G.GAME.modifiers.misprint_misprinted_deck then
-        print("randomizing game stuff")
         local seed = gameSeed .. "misprint_random"
 
         if MISPRINTMOD.config.base_reroll_cost then
-            G.GAME.base_reroll_cost = randomize(G.GAME.base_reroll_cost, seed .. ".base_reroll_cost")
+            G.GAME.starting_params.reroll_cost = randomize(G.GAME.starting_params.reroll_cost, seed .. ".base_reroll_cost")
         end
         if MISPRINTMOD.config.win_ante then
             G.GAME.win_ante = math.ceil(randomize(G.GAME.win_ante, seed .. ".win_ante", 0.3) - 0.5)
@@ -101,8 +126,6 @@ function randomize_game_stuff(gameSeed)
             G.GAME.dollars = randomize(G.GAME.dollars, seed .. ".dollars", 0.2)
         end
 
-        print("game stuff randomized")
-
         G.E_MANAGER:add_event(Event({
             trigger = "after",
             delay = 0.7,
@@ -118,7 +141,6 @@ end
 local card_apply = Card.apply_to_run
 
 function Card:apply_to_run(center)
-    if self then print(self.ability) end
     return card_apply(self, center)
 end
 

@@ -1,5 +1,6 @@
 return {
 	Base = 2.5,
+	only_increase = false,
 	dollars = true,
 	hand_size = false,
 	discards = false,
@@ -19,5 +20,8 @@ return {
 	play_limit = true,
 	discard_limit = true,
 	highlight_limit = true,
-	voucher_slots = true
+	voucher_slots = true,
+	cost = true,
+	ambient_tilt = true,
+	scale = true
 }

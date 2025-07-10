@@ -44,12 +44,16 @@ return {
             misprint_win_ante = "Win Ante",
             misprint_editions = "Editions",
             misprint_enhancements = "Enhancements",
-            misprint_cost = "Cost",
             misprint_rental_rate = "Rental Rate",
             misprint_perishable_rounds = "Perishable Rounds",
             misprint_play_limit = "Play Limit",
             misprint_discard_limit = "Discard Limit",
             misprint_highlight_limit = "Highlight Limit",
+            misprint_cost = "Cost",
+            misprint_ambient_tilt = "Ambient Card Tilt",
+            misprint_scale = "Card Scale",
+
+            misprint_only_increase = "Only increase values?"
 		}
 	}
 }

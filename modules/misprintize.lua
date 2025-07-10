@@ -197,8 +197,9 @@ function sanitize_float(f)
     return math.floor(f * 1000) / 1000
 end
 
-function randomize(value, seed, amount)
+function randomize(value, seed, amount, max_base)
     amount = amount or 1
+    max_base = max_base or math.huge
     local ty = type(value)
     if ty == "number" or (
         -- Talisman
@@ -213,8 +214,12 @@ function randomize(value, seed, amount)
         b = math.min(math.max(b, 0.000001), 0.9999999)
         -- Exp-normal distributed random numbers
         local power = math.sqrt(-2 * math.log(a)) * math.cos(2 * math.pi * b)
-        local factor = math.pow(MISPRINTMOD.config.Base, power)
-        return sanitize_float((value * (1 - amount)) + (value * factor) * amount)
+        local factor = math.pow(math.min(MISPRINTMOD.config.Base, max_base), power)
+        local res = sanitize_float((value * (1 - amount)) + (value * factor) * amount)
+        if MISPRINTMOD.config.only_increase then
+            res = math.max(value, res)
+        end
+        return res
     end
     if ty == "table" then
         if value.inkbleed_immutable and value.inkbleed_immutable == true then
@@ -244,6 +249,16 @@ function Card:misprinted_deck_initialize()
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
 
         self.ability = deep_copy_and_randomize(self.ability, random_seed)
+        if MISPRINTMOD.config.cost then
+            self.base_cost = randomize(self.base_cost, random_seed)
+        end
+
+        random_seed = random_seed .. ".visual"
+        if MISPRINTMOD.config.ambient_tilt then
+            local mul = randomize(1, random_seed, 0.3)
+            mul = math.min(mul, 5)
+            self.ambient_tilt = self.ambient_tilt * mul
+        end
     end
 end
 

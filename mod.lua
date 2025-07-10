@@ -4,7 +4,7 @@
 --- PREFIX: misprint
 --- MOD_AUTHOR: [baltdev]
 --- MOD_DESCRIPTION: Implements an alternative method of the Misprint deck, entirely separate from Cryptid!
---- VERSION: 1.1.2
+--- VERSION: 1.2.0
 ----------------------
 
 MISPRINTMOD = SMODS.current_mod
