@@ -86,7 +86,7 @@ function key_callbacks.max_highlighted(new, old, value)
     return new
 end
 
-function key_callbacks.starting_voucher_count (new, old)
+function key_callbacks.vouchers_in_shop (new, old)
     if MISPRINTMOD.config.voucher_slots then
         return math.max(1, new)
     end
