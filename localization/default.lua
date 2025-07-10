@@ -50,6 +50,7 @@ return {
             misprint_discard_limit = "Discard Limit",
             misprint_highlight_limit = "Highlight Limit",
             misprint_cost = "Cost",
+            misprint_tags = "Tags",
             misprint_ambient_tilt = "Ambient Card Tilt",
             misprint_scale = "Card Scale",
 

@@ -12,6 +12,19 @@ function Card:init(X, Y, W, H, card, center, params)
     return ret
 end
 
+
+local tagInitHook = Tag.init
+function Tag:init(_tag, for_collection, _blind_type)
+    tagInitHook(self, _tag, for_collection, _blind_type)
+    if MISPRINTMOD.config.tags and not _tag.misprint_randomized then
+        local random_seed = self.randomseed or "misprint_random.tag"
+        random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
+        self.config = deep_copy_and_randomize(self.config, random_seed)
+        self.misprint_randomized = true
+    end
+end
+
+
 local cardSetBaseHook = Card.set_base
 function Card:set_base(card, initial)
     local ret = cardSetBaseHook(self, card, initial)

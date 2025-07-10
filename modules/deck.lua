@@ -1,12 +1,8 @@
--- TODO: Add a cardsleeve
-
 SMODS.Back{
     key = "misprinted",
     atlas = "deckBacks",
     pos = { x = 0, y = 0 },
     config = { },
-    set_badges = function (self, card, badges)
-    end,
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
@@ -20,5 +16,6 @@ SMODS.Back{
     apply = function(self)
         G.GAME.modifiers.misprint_misprinted_deck = true
     end,
-
+    set_badges = function (self, card, badges)
+    end,
 }

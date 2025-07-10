@@ -23,5 +23,6 @@ return {
 	voucher_slots = true,
 	cost = true,
 	ambient_tilt = true,
-	scale = true
+	scale = true,
+	tags = true,
 }
