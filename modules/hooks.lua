@@ -3,9 +3,10 @@ local cardInitHook = Card.init
 function Card:init(X, Y, W, H, card, center, params)
     local ret = cardInitHook(self, X, Y, W, H, card, center, params)
     if MISPRINTMOD.config.jokers_and_consumables then
-        self:misprinted_deck_initialize()
         if center and center.misprint_randomized then
             self.ability = center.config
+        else
+            self:misprinted_deck_initialize()
         end
         self.misprint_randomized = true
     end
@@ -184,3 +185,15 @@ function init_localization()
     init_loc()
 end
 
+
+if Cryptid then
+    print("Cryptid.manipulate: ", Cryptid.manipulate)
+    local cryManipulateHook = Cryptid.manipulate
+    function Cryptid.manipulate(card, args)
+        if not args and G.GAME.modifiers.misprint_misprinted_deck then
+            print("not today asshole")
+            return
+        end
+        cryManipulateHook(card, args)
+    end
+end

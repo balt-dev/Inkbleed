@@ -248,10 +248,12 @@ function Card:misprinted_deck_initialize()
         local random_seed = self.randomseed or "misprint_random.card"
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
 
+        print("Old:", self.ability)
         self.ability = deep_copy_and_randomize(self.ability, random_seed)
         if MISPRINTMOD.config.cost then
             self.base_cost = randomize(self.base_cost, random_seed)
         end
+        print("New:", self.ability)
 
         random_seed = random_seed .. ".visual"
         if MISPRINTMOD.config.ambient_tilt then

@@ -1,0 +1,11 @@
+{
+	"id": "misprint",
+	"name": "Inkbleed",
+	"display_name": "Inkbleed",
+	"author": ["baltdev"],
+	"description": "Implements an alternative method of the Misprint deck, entirely separate from Cryptid!",
+	"prefix": "misprint",
+	"main_file": "mod.lua",
+	"priority": 120,
+	"version": "1.2.1",
+}
