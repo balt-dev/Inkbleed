@@ -214,11 +214,12 @@ function randomize(value, seed, amount, max_base)
         b = math.min(math.max(b, 0.000001), 0.9999999)
         -- Exp-normal distributed random numbers
         local power = math.sqrt(-2 * math.log(a)) * math.cos(2 * math.pi * b)
+        if MISPRINTMOD.config.only_increase then
+            power = math.abs(power)
+        end
         local factor = math.pow(math.min(MISPRINTMOD.config.Base, max_base), power)
         local res = sanitize_float((value * (1 - amount)) + (value * factor) * amount)
-        if MISPRINTMOD.config.only_increase then
-            res = math.max(value, res)
-        end
+        res = math.max(value, res)
         return res
     end
     if ty == "table" then

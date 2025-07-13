@@ -7,5 +7,5 @@
 	"prefix": "misprint",
 	"main_file": "mod.lua",
 	"priority": 120,
-	"version": "1.2.1",
+	"version": "1.2.2",
 }
