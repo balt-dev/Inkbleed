@@ -187,11 +187,9 @@ end
 
 
 if Cryptid then
-    print("Cryptid.manipulate: ", Cryptid.manipulate)
     local cryManipulateHook = Cryptid.manipulate
     function Cryptid.manipulate(card, args)
         if not args and G.GAME.modifiers.misprint_misprinted_deck then
-            print("not today asshole")
             return
         end
         cryManipulateHook(card, args)
