@@ -17,7 +17,7 @@ end
 local tagInitHook = Tag.init
 function Tag:init(_tag, for_collection, _blind_type)
     tagInitHook(self, _tag, for_collection, _blind_type)
-    if MISPRINTMOD.config.tags and not _tag.misprint_randomized then
+    if MISPRINTMOD.config.tags and not _tag.misprint_randomized and G.GAME.modifiers.misprint_misprinted_deck then
         local random_seed = self.randomseed or "misprint_random.tag"
         random_seed = (G.GAME and G.GAME.pseudorandom.seed or "") .. "." .. random_seed
         self.config = deep_copy_and_randomize(self.config, random_seed)
