@@ -85,6 +85,14 @@ end
 
 -- Patch to fix decimal blinds
 
+local math_fmod = math.fmod
+function math.fmod(value, divisor) 
+    if type(value) == "table" then
+        return value % divisor
+    end
+    return math_fmod(value, divisor)
+end 
+
 local getBlindAmount = get_blind_amount
 function get_blind_amount(ante)
     if math.fmod(ante, 1) ~= 0 then
